@@ -9,7 +9,7 @@ function Mover(x, y, rad, clr, o) {
   this.clr = clr;
   this.o=o;
   this.orbs=[];
-  let or=Math.random()*(11)+5;
+  this.or=Math.random()*(11)+5;
   for(let i=0;i<this.o;i++){
       this.orbs[i]=new Orbiter(this,20,0.1,2*Math.PI*i/this.o,5);
   }
@@ -86,16 +86,16 @@ Mover.prototype.runOrbit=function(){
 
 Mover.prototype.reproduce=function(){
   for(let i=0;i<this.connections.length;i++){
-    //the second part of the conditional is not working for some unknown reason there is NaN
-    console.log(this.loc.distance(this.connections[i]));
-    if(this.connections[i]!==this&&this.loc.distance(this.connections[i].loc)<1000*this.oRad){
-      console.log("are we here");
+    //if(this.connections[i]!==this&&this.loc.distance(this.connections[i].loc)<1000*this.oRad){
+    if(this.loc.distanceSquared(this.connections[i].loc)<5*this.or){
+      //console.log("are we here");
       let x = this.loc.x+this.connections[i].loc.x;
       let y = this.loc.y+this.connections[i].loc.y;
       let r = Math.random() * 10 + 1;
       let o=Math.random()*5+5;
       let clr=("blue");
-      movers.push(new Mover(x/2,y/2,r,o,clr));
+      //below line causing massive lag
+      //movers.push(new Mover(x/2,y/2,r,clr,o));
     }
   }
 }
