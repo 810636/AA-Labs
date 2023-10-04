@@ -14,6 +14,7 @@ function Mover(x, y, rad, clr, o) {
       this.orbs[i]=new Orbiter(this,20,0.1,2*Math.PI*i/this.o,5);
   }
   this.connections=[];
+  this.canRep=true;
 }
 
 //  placing methods in the prototype (every ball shares functions)
@@ -86,17 +87,18 @@ Mover.prototype.runOrbit=function(){
 
 Mover.prototype.reproduce=function(){
   for(let i=0;i<this.connections.length;i++){
-    //if(this.connections[i]!==this&&this.loc.distance(this.connections[i].loc)<1000*this.oRad){
-    if(this.loc.distanceSquared(this.connections[i].loc)<2*this.or){
+    if(this.connections[i]!==this&&this.loc.distance(this.connections[i].loc)<3*this.or&&this.canRep===true){
+    //if(this.loc.distanceSquared(this.connections[i].loc)<2*this.or){
       //console.log("are we here");
       let x = this.loc.x+this.connections[i].loc.x;
       let y = this.loc.y+this.connections[i].loc.y;
       let r = Math.random() * 10 + 1;
       let o=Math.floor(Math.random()*5)+5;
       let clr=("blue");
-      //below line causing massive lag
+      //worked with below line but not current line-memory issues?
       //movers.push(new Mover(400,400,10,"red",1));
-      //movers.push(new Mover(x/2,y/2,r,clr,o));
+      this.canRep=false;
+      movers.push(new Mover(x/2,y/2,r,clr,o));
     }
   }
 }
