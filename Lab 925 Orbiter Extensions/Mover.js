@@ -86,20 +86,21 @@ Mover.prototype.runOrbit=function(){
 }
 
 Mover.prototype.reproduce=function(){
-  for(let i=0;i<this.connections.length;i++){
-    if(this.connections[i]!==this&&this.loc.distance(this.connections[i].loc)<3*this.or&&this.canRep===true){
-    //if(this.loc.distanceSquared(this.connections[i].loc)<2*this.or){
-      //console.log("are we here");
-      let x = Math.floor(this.loc.x+this.connections[i].loc.x);
-      let y = Math.floor(this.loc.y+this.connections[i].loc.y);
-      let r = Math.floor(Math.random() * 10) + 1;
-      let o=Math.floor(Math.random()*5)+5;
-      //let clr="blue";
-      //stops after a certain number of red movers, breaks when trying to push first clr mover
-      //movers.push(new Mover(400,400,10,"red",1));
-      this.canRep=false;
-      movers.push(new Mover(x/2,y/2,r,"blue",o));
-      return;
+  if(this.canRep){
+    for(let i=0;i<this.connections.length;i++){
+      if(this.connections[i]!==this&&this.loc.distance(this.connections[i].loc)<3*this.or){
+        let x = Math.floor(this.loc.x+this.connections[i].loc.x);
+        let y = Math.floor(this.loc.y+this.connections[i].loc.y);
+        let r = Math.floor(Math.random() * 10) + 1;
+        let o=Math.floor(Math.random()*5)+5;
+        let clr="blue";
+        //stops after a certain number of red movers, breaks when trying to push first clr mover
+        //movers.push(new Mover(400,400,10,"red",1));
+        this.canRep=false;
+        movers.push(new Mover(x/2,y/2,r,clr,o));
+        return;
+      }
     }
   }
+  
 }
