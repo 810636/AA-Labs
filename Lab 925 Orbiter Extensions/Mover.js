@@ -87,14 +87,15 @@ Mover.prototype.runOrbit=function(){
 Mover.prototype.reproduce=function(){
   for(let i=0;i<this.connections.length;i++){
     //if(this.connections[i]!==this&&this.loc.distance(this.connections[i].loc)<1000*this.oRad){
-    if(this.loc.distanceSquared(this.connections[i].loc)<5*this.or){
+    if(this.loc.distanceSquared(this.connections[i].loc)<2*this.or){
       //console.log("are we here");
       let x = this.loc.x+this.connections[i].loc.x;
       let y = this.loc.y+this.connections[i].loc.y;
       let r = Math.random() * 10 + 1;
-      let o=Math.random()*5+5;
+      let o=Math.floor(Math.random()*5)+5;
       let clr=("blue");
       //below line causing massive lag
+      //movers.push(new Mover(400,400,10,"red",1));
       //movers.push(new Mover(x/2,y/2,r,clr,o));
     }
   }
