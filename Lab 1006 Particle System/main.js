@@ -3,7 +3,8 @@
 window.addEventListener("load", init);
 
 // global variables
-
+let colors=[];
+let shapes=[];
 
 function init() {
     canvas = document.getElementById("cnv");
