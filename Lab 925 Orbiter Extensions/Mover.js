@@ -22,8 +22,8 @@ Mover.prototype.run = function () {
   this.checkEdges();
   this.render();
   this.runOrbit();
-  this.reproduce();
   this.update();
+  this.reproduce();
 }
 
 //  Check to see if buuble leaves canvas area and reposition in necessary
