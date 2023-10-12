@@ -3,7 +3,6 @@
 window.addEventListener("load", init);
 
 // global variables
-let colors=["red","orange","yellow","green","blue","indigo","violet"];
 let particleSystems=[];
 
 function init() {

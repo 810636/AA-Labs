@@ -3,8 +3,7 @@
 window.addEventListener("load", init);
 
 // global variables
-let colors=["red","orange","yellow","green","blue","indigo","violet"];
-let particleSystems=[];
+let plants=[];
 
 function init() {
     canvas = document.getElementById("cnv");
@@ -20,20 +19,20 @@ function animate() {
     requestAnimationFrame(animate); // next cycle
 }
 function runPS(){
-    for(let i=0;i<particleSystems.length;i++){
-        particleSystems[i].run();
+    for(let i=0;i<plants.length;i++){
+        plants[i].run();
     }
 }
 function deletePS(){
-    for(let i=particleSystems.length-1;i<=0;i--){
-        if(particleSystems[i].producing===false&&particleSystems[i].particles.length===0){
-            particleSystems.splice(i,1);
+    for(let i=plants.length-1;i<=0;i--){
+        if(plants[i].producing===false&&plants[i].particles.length===0){
+            plants.splice(i,1);
         }
     }
 }
 window.addEventListener("click",addPS);
 
 function addPS(calvinpfeffer){
-    particleSystems.push(new ParticleSystem(calvinpfeffer.offsetX,calvinpfeffer.offsetY));
+    plants.push(new Plant(calvinpfeffer.offsetX,calvinpfeffer.offsetY));
 }
 
