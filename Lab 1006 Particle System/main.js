@@ -3,8 +3,8 @@
 window.addEventListener("load", init);
 
 // global variables
-let colors=[];
-let shapes=[];
+let colors=["red","orange","yellow","green","blue","indigo","violet"];
+let particleSystems=[];
 
 function init() {
     canvas = document.getElementById("cnv");
@@ -16,9 +16,17 @@ function init() {
 function animate() {
     // erase the HTMLCanvasElement
     context.clearRect(0, 0, canvas.width, canvas.height);
-    
+    runPS();
     requestAnimationFrame(animate); // next cycle
 }
+function runPS(){
+    for(let i=0;i<particleSystems.length;i++){
+        particleSystems[i].run();
+    }
+}
+window.addEventListener("click",addPS);
 
-
+function addPS(calvinpfeffer){
+    particleSystems.push(new ParticleSystem(calvinpfeffer.offsetX,calvinpfeffer.offsetY));
+}
 
