@@ -1,4 +1,4 @@
-function Particle(x,y,size,shape, clr,ps){
+function Particle(x,y,size,shape, clr,ps,hp){
     this.loc=new JSVector(x,y);
     this.size=size;
     let dx = Math.random() * (3 + 3 + 1) - 3;
@@ -6,7 +6,7 @@ function Particle(x,y,size,shape, clr,ps){
     this.vel=new JSVector(dx,dy);
     this.acc=new JSVector(0,0.1);
     this.ps=ps;
-    this.hp=600;
+    this.hp=hp;
 }
 Particle.prototype.run=function(){
     this.render();

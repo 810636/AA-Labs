@@ -12,7 +12,8 @@ ParticleSystem.prototype.add=function(){
     //adjust starting position more
     let s=Math.floor(Math.random()*2);
     let c=Math.floor(Math.random()*10);
-    this.particles.push(x,y,s,c,this);
+    let hp=Math.random()*(600-500+1)+500;
+    this.particles.push(x,y,s,c,this,hp);
 }
 ParticleSystem.prototype.render=function(){
     for(let i=0;i<this.particles.length;i++){
