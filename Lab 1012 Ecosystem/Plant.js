@@ -5,7 +5,9 @@ function Plant(x,y){
     this.hp=1200; //seconds of survival *60
 }
 Plant.prototype.run=function(){
-    this.add();
+    if(this.hp%120===0){
+        this.add();
+    }
     this.runParticles();
     this.checkParticleDeath();
     this.decay();
@@ -15,7 +17,7 @@ Plant.prototype.add=function(){
         let x=this.loc.x+Math.random()*20-10;
         let y=this.loc.y+Math.random()*20-10;
         //adjust starting position more
-        let size=Math.floor(Math.random()*5)+3;
+        let size=Math.floor(Math.random()*5)+6;
         let s=Math.floor(Math.random()*2);
         let hp=Math.random()*(600-500+1)+500;
         this.particles.push(new Particle(x,y,size,s,hp));

@@ -2,14 +2,13 @@ function Particle(x,y,size,shape,hp){
     this.loc=new JSVector(x,y);
     this.size=size;
     this.shape=shape;
-    let dx = Math.random() * (3 + 3 + 1) - 3;
-    let dy = Math.random() * (3 + 3 + 1) - 5;
+    let dx = Math.random() * (1 + 1 + 1) - 1;
+    let dy = Math.random() * (1 + 1 + 1) - 1;
     this.vel=new JSVector(dx,dy);
-    this.acc=new JSVector(0,0.05);
     this.hp=hp;
-    this.r=Math.random()*(255-0+1)+1;
-    this.g=Math.random()*(255-0+1)+1;
-    this.b=Math.random()*(255-0+1)+1;
+    this.r=Math.random()*(150-0+1)+1;
+    this.g=255
+    this.b=Math.random()*(150-0+1)+1;
     this.opacity=1;
 }
 Particle.prototype.run=function(){
@@ -17,7 +16,10 @@ Particle.prototype.run=function(){
     this.update();
 }
 Particle.prototype.update=function(){
-    this.vel.add(this.acc);
+    if(this.opacity<0.6){
+        this.vel.setMagnitude(0);
+        return;
+    }
     this.loc.add(this.vel);
     this.hp-=1;
     this.opacity=this.hp/600;
