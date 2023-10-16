@@ -39,3 +39,6 @@ Plant.prototype.decay=function(){
         this.producing=false;
     }
 }
+Plant.prototype.render=function(){
+    
+}
