@@ -4,10 +4,12 @@ window.addEventListener("load", init);
 
 // global variables
 let plants=[];
+let eaters=[];
 
 function init() {
     canvas = document.getElementById("cnv");
     context = canvas.getContext("2d");
+    eaters.push(new Eater(200,200,10,"blue",3));
     animate();      // kick off the animation
 }
 
@@ -16,11 +18,17 @@ function animate() {
     // erase the HTMLCanvasElement
     context.clearRect(0, 0, canvas.width, canvas.height);
     runPS();
+    runEaters();
     requestAnimationFrame(animate); // next cycle
 }
 function runPS(){
     for(let i=0;i<plants.length;i++){
         plants[i].run();
+    }
+}
+function runEaters(){
+    for(let i=0;i<eaters.length;i++){
+        eaters[i].run();
     }
 }
 function deletePS(){
