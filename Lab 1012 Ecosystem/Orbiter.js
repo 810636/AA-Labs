@@ -23,7 +23,6 @@ Orbiter.prototype.update=function(){
 Orbiter.prototype.render=function(){
     context.beginPath();    // clear old path
   // https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/arc
-  
   context.arc(this.loc.x, this.loc.y, this.rad, 0, 2 * Math.PI);
   context.fillStyle = "rgba(255,255,255,1)";
   context.fill();     // render the fill
