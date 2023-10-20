@@ -11,6 +11,7 @@ function Particle(x,y,size,shape,hp){
     this.g=Math.random()*(255-0+1)+1;
     this.b=Math.random()*(255-0+1)+1;
     this.opacity=1;
+    this.angle=0;
 }
 Particle.prototype.run=function(){
     this.render();
@@ -21,21 +22,21 @@ Particle.prototype.update=function(){
     this.loc.add(this.vel);
     this.hp-=1;
     this.opacity=this.hp/600;
+    this.angle+=0.05;
+    if(this.angle>=(Math.PI*2)){
+        this.angle=0;
+    }
 }
 Particle.prototype.render=function(){
     context.save();
     context.translate(this.loc.x,this.loc.y);
     context.beginPath();    // clear old path
-    context.rotate(0.1);
+    context.rotate(this.angle);
     if(this.shape===0){
-        context.beginPath();
         context.arc(0, 0, this.size, 0, 2 * Math.PI);
     } else if(this.shape===1){
-        context.beginPath();
         context.rect(0,0,this.size,this.size);
     } else if(this.shape===2){
-        context.beginPath();
-        context.moveTo(0,0);
         context.lineTo(-this.size,this.size);
         context.lineTo(this.size,this.size);
         context.lineTo(0,0);
