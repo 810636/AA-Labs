@@ -23,15 +23,25 @@ Particle.prototype.update=function(){
     this.opacity=this.hp/600;
 }
 Particle.prototype.render=function(){
+    context.save();
+    context.translate(this.loc.x,this.loc.y);
+    context.beginPath();    // clear old path
+    context.rotate(0.1);
     if(this.shape===0){
         context.beginPath();
-        context.arc(this.loc.x, this.loc.y, this.size, 0, 2 * Math.PI);
-        context.fillStyle = "rgb("+this.r+","+this.g+","+this.b+","+this.opacity+")";
-        context.fill();
+        context.arc(0, 0, this.size, 0, 2 * Math.PI);
     } else if(this.shape===1){
         context.beginPath();
-        context.rect(this.loc.x,this.loc.y,this.size,this.size);
-        context.fillStyle = "rgb("+this.r+","+this.g+","+this.b+","+this.opacity+")";
-        context.fill();
+        context.rect(0,0,this.size,this.size);
+    } else if(this.shape===2){
+        context.beginPath();
+        context.moveTo(0,0);
+        context.lineTo(-this.size,this.size);
+        context.lineTo(this.size,this.size);
+        context.lineTo(0,0);
+        context.closePath();
     }
+    context.fillStyle = "rgb("+this.r+","+this.g+","+this.b+","+this.opacity+")";
+    context.fill();
+    context.restore();
 }

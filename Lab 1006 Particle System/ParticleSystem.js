@@ -15,8 +15,7 @@ ParticleSystem.prototype.add=function(){
         let x=this.loc.x+Math.random()*20-10;
         let y=this.loc.y+Math.random()*20-10;
         //adjust starting position more
-        let s=Math.floor(Math.random()*2);
-        let c=Math.floor(Math.random()*colors.length);
+        let s=Math.floor(Math.random()*3);
         let hp=Math.random()*(600-500+1)+500;
         this.particles.push(new Particle(x,y,5,s,hp));
     }

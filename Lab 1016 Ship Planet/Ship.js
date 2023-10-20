@@ -11,28 +11,37 @@ Ship.prototype.run=function(){
     this.update();
 }
 Ship.prototype.render=function(){
+    let rA=this.vel.getDirection()+Math.PI/2;
+    context.save();
+    context.translate(this.loc.x,this.loc.y);
+
+
     context.beginPath();    // clear old path
   // https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/arc
 //   context.arc(this.loc.x, this.loc.y, 5, 0, 2 * Math.PI);
     //currently trying to fill and rotate
-    // context.save();
-    // context.translate(this.loc.x,this.loc.y);
-    // context.rotate(this.vel.getDirection());
-    context.moveTo(this.loc.x,this.loc.y-10);
-    context.lineTo(this.loc.x-5,this.loc.y+5);
-    context.moveTo(this.loc.x,this.loc.y);
-    context.lineTo(this.loc.x-5,this.loc.y+5);
-    context.moveTo(this.loc.x,this.loc.y);
-    context.lineTo(this.loc.x+5,this.loc.y+5);
-    context.moveTo(this.loc.x+5,this.loc.y+5);
-    context.lineTo(this.loc.x,this.loc.y-10);
-    context.strokeStyle="violet";
-    context.stroke();
+    context.rotate(rA);
+    context.moveTo(0,-10);
+    context.lineTo(-5,5);
+    context.lineTo(0,0);
+    context.lineTo(5,5);
+    context.lineTo(0,-10);
     context.closePath(); 
     context.fillStyle = "blue";
     context.fill();  // the fill is not working
-    // context.restore();
-
+    //flame
+    let fl = this.vel.getMagnitude()*12;
+    context.beginPath();
+    context.moveTo(0,5);
+    context.lineTo(-5,10);
+    context.lineTo(0,fl);
+    context.lineTo(5,10);
+    context.lineTo(0,5);
+    context.closePath();
+    let opacity=this.vel.getMagnitude()/5;
+    context.fillStyle = "rgb(240, 90, 26,"+opacity+")";
+    context.fill();
+    context.restore(); 
 }
 Ship.prototype.update=function(){
     this.acc=JSVector.subGetNew(planet.loc,this.loc);
