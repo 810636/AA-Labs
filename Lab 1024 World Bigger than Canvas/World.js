@@ -79,7 +79,7 @@ World.prototype.run = function () {
   // save the main context
   this.ctxMain.save();
   // translate cnvMain according to the location of the canvas in the world
-
+  this.cnvMain.translate(this.cnvMainLoc.x,this.cnvMainLoc.y);
   // draw the bounds of the world in cnvMain
 
   // Add axis in the main Canvas
@@ -94,7 +94,9 @@ World.prototype.run = function () {
   //center cnvMini in world
 
   //outline box inside of cnvMini
-
+  //this.ctxMini.rect(); still need to get coordinates
+  this.ctxMini.strokeStyle="red";
+  this.ctxMini.stroke();
   //draw x and y axes on miniMap
 
   // restore both ctxMain and ctxMini

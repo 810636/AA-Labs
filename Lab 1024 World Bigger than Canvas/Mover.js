@@ -1,17 +1,18 @@
-function Mover(loc, vel, d, ctx1, ctx2, worldWidth, worldHeight) {
+function Mover(loc, vel, r, ctx1, ctx2, worldWidth, worldHeight) {
   //mover properties
   this.loc = loc;
   this.vel = vel;
   this.acc = new JSVector(0, 0);
-  this.diam = d;
+  this.rad = r;
   this.ctx1 = ctx1;
   this.ctx2 = ctx2;
   this.wWidth = worldWidth;
   this.wHeight = worldHeight;
   this.worldScale = new JSVector(this.wWidth, this.wHeight);
-  this.r=Math.random()*(255-0+1)+1;
-  this.g=Math.random()*(255-0+1)+1;
-  this.b=Math.random()*(255-0+1)+1;
+  let r=Math.random()*(255-0+1)+1;
+  let g=Math.random()*(255-0+1)+1;
+  let b=Math.random()*(255-0+1)+1;
+  this.clr="rgb("+r+","+g+","+b+")";
 }//++++++++++++++++++++++++++++++++ end mover constructor
 
 //++++++++++++++++++++++++++++++++ mover methods
@@ -41,9 +42,14 @@ Mover.prototype.checkEdges = function () {
 Mover.prototype.render = function () {
    //  render balls in world
     let ctx1 = this.ctx1;
-    ctx1.fillStyle = "rgb("+this.r+","+this.g+","+this.b+","+this.opacity+")";
+    ctx1.save();
+    ctx1.arc(this.loc.x,this.loc.y,this.rad,0,Math.PI*2);
+    ctx1.fillStyle = this.clr;
+    ctx1.fill();
    //  render balls in mini map
     let ctx2 = this.ctx2;
-    ctx2.fillStyle = "rgb("+this.r+","+this.g+","+this.b+","+this.opacity+")";
+    ctx2.save();
+    ctx2.arc(this.loc.x,this.loc.y,this.rad,0,Math.PI*2);
+    ctx2.fillStyle = this.clr;
    
 }
