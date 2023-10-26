@@ -1,126 +1,142 @@
 function World() {
-  //  this is our main Canvas that will show only a small portion of the world
+  //Main canvas showing part of world 
   this.cnvMain = document.getElementById('cnv1');
   this.ctxMain = this.cnvMain.getContext('2d');
-  //This smaller canvas will show the entire world at one forth the size of the main canvas
+  //Mini canvas showing the whole world 
   this.cnvMini = document.getElementById('cnv2');
   this.ctxMini = this.cnvMini.getContext('2d');
-  //  Create a Vector that will move the Canvas location relative to the world
-  this.cnvMainLoc = new JSVector(0, 0);
-
-  this.dims = {//  object leteral that prvides bounds for the entire world
-    top: -1500,
-    left: -2000,
-    bottom: 1500,
-    right: 2000,
-    width: 4000,
-    height: 3000
+  //move Canvas relative to the world 
+  this.canvasMainLoc = new JSVector(0, 0);
+  //object holding limits of the whole world 
+  this.dims = {
+      top: -1500,
+      left: -2000,
+      bottom: 1500,
+      right: 2000,
+      width: 4000,
+      height: 3000
   }
-
+  //create bubbles 
   this.movers = [];
-  this.loadMovers(2800, this.ctxMain, this.ctxMini, this.dims.width, this.dims.height);
-
-  //reduce world to fit inside of mini Canvas
-  this.scaleX = this.cnvMini.width/this.cnvMain.width;
-  this.scaleY = this.cnvMini.height/this.cnvMain.height;
-
-  // add an event handler such that the a, s, w, d keys
-  // will reposition the canvas within the world.
+  this.loadMovers(100, this.ctxMain, this.ctxMini, this.dims.width, this.dims.height);
+  //make world fit in Mini canvas 
+  this.scaleX = this.cnvMini.width/this.dims.width;
+  this.scaleY = this.cnvMini.height/this.dims.height;
+  //make Main canvas move in world with wasd keys 
   window.addEventListener("keypress", function (event) {
-    switch (event.code) {
-      case "KeyW":
-        if (world.cnvMainLoc.y + 100 > world.dims.top)
-          world.cnvMainLoc.y -= 20;
-        break;
-      case "KeyS":
-        if (world.cnvMainLoc.y + world.cnvMain.height - 100 < world.dims.bottom)
-          world.cnvMainLoc.y += 20;
-        break;
-      case "KeyA":
-        if (world.cnvMainLoc.x + 100 > world.dims.left)
-          world.cnvMainLoc.x -= 20;
-        break;
-      case "KeyD":
-        if (world.cnvMainLoc.x + world.cnvMain.width - 100 < world.dims.right)
-          world.cnvMainLoc.x += 20;
-        break;
-    }
+      switch (event.code) {
+          case "KeyW":
+              if (world.canvasMainLoc.y + 100 > world.dims.top)
+                  world.canvasMainLoc.y -= 20;
+              break;
+          case "KeyS":
+              if (world.canvasMainLoc.y + world.cnvMain.height - 100 < world.dims.bottom)
+                  world.canvasMainLoc.y += 20;
+              break;
+          case "KeyA":
+              if (world.canvasMainLoc.x + 100 > world.dims.left)
+                  world.canvasMainLoc.y -= 20;
+              break;
+          case "KeyD":
+              if (world.canvasMainLoc.x + world.cnvMain.width - 100 < world.dims.right)
+                  world.canvasMainLoc.y += 20;
+              break;
+      }
   }, false);
-}//++++++++++++++++++++++++++++++  end world constructor
-
-
-// run the world in animation
-World.prototype.run = function () {
-
-  this.ctxMain.strokeStyle = 'rgb(255, 0, 255)';//  color of outer border on Main canvas
-  this.ctxMain.clearRect(0, 0, this.cnvMain.width, this.cnvMain.height);//  clear the canvas
-
-  //+++++++++++++++++++++++++++++++++++++++++++++++++++++ run movers
-  //  save the context for the main Canvas
-  this.ctxMain.save();
-  //  move the main canvas inside of the world (translate according to this.cnvMainLoc)
-  this.ctxMain.translate(this.cnvMainLoc.x,this.cnvMainLoc.y);
-  //  clear the mini rect
-  this.ctxMini.clearRect(0,0,this.cnvMini.width,this.cnvMini.height);
-  //  save the miniContext
-  this.ctxMini.save();
-  //  scale world to fit in mini canvas (this.scaleX and this.scaleY)
-  this.ctxMain.scale(this.scaleX,this.scaleY);
-  //  center rect in the miniCanvas
-  //this.ctxMini.rect();
-  //  run all of the movers
-  this.runMovers();
-  //  restore the main and mini contexts
-  this.ctxMain.restore();
-  this.ctxMini.restore();
-
-  //+++++++++++++++++++++++++++++++++++++++++++++++++++++ Draw the main and mini Canvas with bounds and axes
-
-  // save the main context
-  this.ctxMain.save();
-  // translate cnvMain according to the location of the canvas in the world
-  this.cnvMain.translate(this.cnvMainLoc.x,this.cnvMainLoc.y);
-  // draw the bounds of the world in cnvMain
-
-  // Add axis in the main Canvas
-
-  //draw x and y axes on miniMap
-  this.ctxMini.moveTo(0,this.cnvMini.height/2);
-  this.ctxMini.lineTo(this.cnvMini.width,this.cnvMain.height/2);
-  this.ctxMini.moveTo(this.cnvMini.width/2,0);
-  this.ctxMini.lineTo(this.cnvMini.width/2,this.cnvMini.height);
-  // scale cnvMini - contain the entire world (scaleX, and scaleY)
-  this.ctxMini.scale(this.scaleX,this.scaleY);
-  //center cnvMini in world
-
-  //outline box inside of cnvMini
-  //this.ctxMini.rect(); still need to get coordinates
-  this.ctxMini.strokeStyle="red";
-  this.ctxMini.stroke();
-  //draw x and y axes on miniMap
-
-  // restore both ctxMain and ctxMini
-  this.ctxMain.restore();
-  this.ctxMini.restore();
 }
 
-//  Load mover array
-//  Load each context into each Mover
-World.prototype.loadMovers = function (numMovers, ctx1, ctx2, w, h) {
-  for (let i = 0; i < numMovers; i++) {
-    let diam = 10;
-    let x = Math.random() * (this.dims.width - 2 * diam) + diam - this.dims.width / 2;
-    let y = Math.random() * (this.dims.height - 2 * diam) + diam - this.dims.height / 2;
-    let loc = new JSVector(x, y);
-    let dx = Math.random() * 2 - 1;
-    let dy = Math.random() * 2 - 1;
-    let vel = new JSVector(dx, dy);
-    //each mover gets a reference to both canvas objects
-    this.movers.push(new Mover(loc, vel, diam, ctx1, ctx2, w, h));
+World.prototype.run = function(){
+  //clear the canvas
+  this.ctxMain.clearRect(0, 0, this.cnvMain.width, this.cnvMain.height);
+
+  //run bubbles 
+  for(let i = 0; i<this.movers.length; i++){
+      this.movers[i].run();
   }
+//  save the ctx for the main Canvas
+    this.ctxMain.save();
+//  move the main canvas inside of the world (translate according to this.cnvMainLoc)
+    this.ctxMain.translate(-this.canvasMainLoc.x, -this.canvasMainLoc.y);
+//  clear the mini rect
+    this.ctxMini.clearRect(0, 0, this.cnvMini.width, this.cnvMini.height);
+//  save the minictx
+    this.ctxMini.save();
+//  scale world to fit in mini canvas (this.scaleX and this.scaleY)
+    this.ctxMain.scale(this.scaleX, this.scaleY);
+//  center rect in the miniCanvas
+    this.ctxMini.translate(this.ctxMain.width/2, this.ctxMain.height/2);
+//  run all of the movers
+    for(let i = 0; i<this.movers.length; i++){
+      this.movers[i].run();
+    }
+//  restore the main and mini ctxs
+  this.ctxMini.restore();
+  this.ctxMain.restore();
+//+++    Draw the main and mini Canvas with bounds and axes
+  this.ctxMain.save();
+  this.ctxMain.translate(this.canvasMainLoc.x, this.canvasMainLoc.y);
+
+// save the main ctx
+  this.ctxMain.save();
+// translate cnvMain according to the location of the canvas in the world
+
+// draw the bounds of the world in cnvMain
+  this.ctxMain.restore();
+// Add axis in the main Canvas
+  this.ctxMain.beginPath(); 
+  this.ctxMain.moveTo(this.dims.left, 0);
+  this.ctxMain.lineTo(this.dims.right, 0);
+  this.ctxMain.closePath();
+  this.ctxMain.lineWidth = 20;
+  this.ctxMain.stroke();
+  this.ctxMain.beginPath();
+  this.ctxMain.moveTo(0, this.dims.top);
+  this.ctxMain.lineTo(0, this.dims.bottom);
+  this.ctxMain.closePath();
+  this.ctxMain.lineWidth = 20;
+  this.ctxMain.stroke();
+//draw x and y axes on main Map
+  
+// scale cnvMini - contain the entire world (scaleX, and scaleY)
+
+//center cnvMini in world
+
+//outline box inside of cnvMini
+  this.ctxMini.beginPath(); //draws border mini
+  this.ctxMini.moveTo(this.canvasMainLoc.x, this.canvasMainLoc.y);
+  this.ctxMini.lineTo(this.canvasMainLoc.x, this.canvasMainLoc.y+this.cnvMain.height);
+  this.ctxMini.lineTo(this.canvasMainLoc.x + this.cnvMain.width, this.canvasMainLoc.y+this.cnvMain.height);
+  this.ctxMini.lineTo(this.canvasMainLoc.x + this.cnvMain.width, this.canvasMainLoc.y);
+  this.ctxMini.closePath();
+  this.ctxMini.lineWidth = 20;
+  this.ctxMini.stroke();
+//draw x and y axes on miniMap
+  this.ctxMini.beginPath(); 
+  this.ctxMini.moveTo(this.dims.left, 0);
+  this.ctxMini.lineTo(this.dims.right, 0);
+  this.ctxMini.closePath();
+  this.ctxMini.lineWidth = 20;
+  this.ctxMini.stroke();
+  this.ctxMini.beginPath();
+  this.ctxMini.moveTo(0, this.dims.top);
+  this.ctxMini.lineTo(0, this.dims.bottom);
+  this.ctxMini.closePath();
+  this.ctxMini.lineWidth = 20;
+  this.ctxMini.stroke();
+// restore both ctxMain and ctxMini
+
+
+
 }
-World.prototype.runMovers=function(){
-  for(let i=0;i<this.movers.length;i++){
-    this.movers[i].run();
+
+
+World.prototype.loadMovers = function (number, ctx1, ctx2, width, height) {
+  for (let i = 0; i < number; i++) {
+      let diam = 20;
+      let x = Math.random() * (this.dims.width - 2 * diam) + diam - this.dims.width / 2;
+      let y = Math.random() * (this.dims.height - 2 * diam) + diam - this.dims.height / 2;
+      let loc = new JSVector(x, y);
+      let vel = new JSVector(Math.random() * 5 - 2.5, Math.random() * 5 - 2.5);
+      this.movers.push(new Mover(loc, vel, diam, ctx1, ctx2, width, height));
   }
 }

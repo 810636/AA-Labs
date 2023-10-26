@@ -9,10 +9,10 @@ function Mover(loc, vel, r, ctx1, ctx2, worldWidth, worldHeight) {
   this.wWidth = worldWidth;
   this.wHeight = worldHeight;
   this.worldScale = new JSVector(this.wWidth, this.wHeight);
-  let r=Math.random()*(255-0+1)+1;
+  let red=Math.random()*(255-0+1)+1;
   let g=Math.random()*(255-0+1)+1;
   let b=Math.random()*(255-0+1)+1;
-  this.clr="rgb("+r+","+g+","+b+")";
+  this.clr="rgb("+red+","+g+","+b+")";
 }//++++++++++++++++++++++++++++++++ end mover constructor
 
 //++++++++++++++++++++++++++++++++ mover methods
