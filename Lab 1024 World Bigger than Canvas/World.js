@@ -27,11 +27,11 @@ function World() {
       switch (event.code) {
         case "KeyW":
                 if (world.cnvMainLoc.y + 100 > world.dims.top)
-                    world.cnvMainLoc.y -= 20;
+                    world.cnvMainLoc.y += 20;
                 break;
             case "KeyS":
                 if (world.cnvMainLoc.y + world.cnvMain.height - 100 < world.dims.bottom)
-                    world.cnvMainLoc.y += 20;
+                    world.cnvMainLoc.y -= 20;
                 break;
             case "KeyA":
                 if (world.cnvMainLoc.x + 100 > world.dims.left)
@@ -48,11 +48,6 @@ function World() {
 World.prototype.run = function(){
   //clear the canvas
   this.ctxMain.clearRect(0, 0, this.cnvMain.width, this.cnvMain.height);
-
-  //run bubbles 
-  for(let i = 0; i<this.movers.length; i++){
-      this.movers[i].run();
-  }
 //  save the ctx for the main Canvas
     this.ctxMain.save();
 //  move the main canvas inside of the world (translate according to this.cnvMainLoc)
@@ -62,9 +57,9 @@ World.prototype.run = function(){
 //  save the minictx
     this.ctxMini.save();
 //  scale world to fit in mini canvas (this.scaleX and this.scaleY)
-    this.ctxMain.scale(this.scaleX, this.scaleY);
+    this.ctxMain.scale(this.scaleX, this.scaleY);//seems to shrink main canvas on itself
 //  center rect in the miniCanvas
-    this.ctxMini.translate(this.ctxMain.width/2, this.ctxMain.height/2);
+    this.ctxMini.translate(this.ctxMini.width/2, this.ctxMini.height/2);
 //  run all of the movers
     for(let i = 0; i<this.movers.length; i++){
       this.movers[i].run();
@@ -73,8 +68,6 @@ World.prototype.run = function(){
   this.ctxMini.restore();
   this.ctxMain.restore();
 //+++    Draw the main and mini Canvas with bounds and axes
-  this.ctxMain.save();
-  this.ctxMain.translate(this.cnvMainLoc.x, this.cnvMainLoc.y);
 
 // save the main ctx
   this.ctxMain.save();
@@ -106,14 +99,16 @@ World.prototype.run = function(){
   
 // scale cnvMini - contain the entire world (scaleX, and scaleY)
 this.ctxMini.scale(this.scaleX,this.scaleY);
-//center cnvMini in world
 
+//center cnvMini in world
+  this.ctxMini.translate(this.dims.width/2,this.dims.height/2);
 //outline box inside of cnvMini
   this.ctxMini.beginPath(); //draws border mini
   this.ctxMini.moveTo(this.cnvMainLoc.x, this.cnvMainLoc.y);
-  this.ctxMini.lineTo(this.cnvMainLoc.x, this.cnvMainLoc.y+this.cnvMain.height);
-  this.ctxMini.lineTo(this.cnvMainLoc.x + this.cnvMain.width, this.cnvMainLoc.y+this.cnvMain.height);
-  this.ctxMini.lineTo(this.cnvMainLoc.x + this.cnvMain.width, this.cnvMainLoc.y);
+  this.ctxMini.lineTo(this.cnvMainLoc.x+this.cnvMain.width,this.cnvMainLoc.y);
+  this.ctxMini.lineTo(this.cnvMainLoc.x+this.cnvMain.width,this.cnvMainLoc.y+this.cnvMain.height);
+  this.ctxMini.lineTo(this.cnvMainLoc.x,this.cnvMainLoc.y+this.cnvMain.height);
+  this.ctxMini.lineTo(this.cnvMainLoc.x, this.cnvMainLoc.y);
   this.ctxMini.closePath();
   this.ctxMini.lineWidth = 20;
   this.ctxMini.stroke();
@@ -133,8 +128,10 @@ this.ctxMini.scale(this.scaleX,this.scaleY);
 // restore both ctxMain and ctxMini
   this.ctxMain.restore();
   this.ctxMini.restore();
-
-
+  //run bubbles 
+ for(let i = 0; i<this.movers.length; i++){
+  this.movers[i].run();
+}
 }
 
 

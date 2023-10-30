@@ -42,15 +42,16 @@ Mover.prototype.checkEdges = function () {
 Mover.prototype.render = function () {
    //  render balls in world
     let ctx1 = this.ctx1;
-    ctx1.save();
+    ctx1.beginPath();
     ctx1.arc(this.loc.x,this.loc.y,this.rad,0,Math.PI*2);
+    ctx1.closePath();
     ctx1.fillStyle = this.clr;
     ctx1.fill();
    //  render balls in mini map
     let ctx2 = this.ctx2;
-    ctx2.save();
+    ctx2.beginPath();
     ctx2.arc(this.loc.x,this.loc.y,this.rad,0,Math.PI*2);
     ctx2.fillStyle = this.clr;
-    ctx1.restore();
-    ctx2.restore();
+    ctx2.fill();
+    ctx2.closePath();
 }
