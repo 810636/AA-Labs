@@ -51,5 +51,6 @@ Mover.prototype.render = function () {
     ctx2.save();
     ctx2.arc(this.loc.x,this.loc.y,this.rad,0,Math.PI*2);
     ctx2.fillStyle = this.clr;
-   
+    ctx1.restore();
+    ctx2.restore();
 }

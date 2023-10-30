@@ -6,7 +6,7 @@ function World() {
   this.cnvMini = document.getElementById('cnv2');
   this.ctxMini = this.cnvMini.getContext('2d');
   //move Canvas relative to the world 
-  this.canvasMainLoc = new JSVector(0, 0);
+  this.cnvMainLoc = new JSVector(0, 0);
   //object holding limits of the whole world 
   this.dims = {
       top: -1500,
@@ -25,22 +25,22 @@ function World() {
   //make Main canvas move in world with wasd keys 
   window.addEventListener("keypress", function (event) {
       switch (event.code) {
-          case "KeyW":
-              if (world.canvasMainLoc.y + 100 > world.dims.top)
-                  world.canvasMainLoc.y -= 20;
-              break;
-          case "KeyS":
-              if (world.canvasMainLoc.y + world.cnvMain.height - 100 < world.dims.bottom)
-                  world.canvasMainLoc.y += 20;
-              break;
-          case "KeyA":
-              if (world.canvasMainLoc.x + 100 > world.dims.left)
-                  world.canvasMainLoc.y -= 20;
-              break;
-          case "KeyD":
-              if (world.canvasMainLoc.x + world.cnvMain.width - 100 < world.dims.right)
-                  world.canvasMainLoc.y += 20;
-              break;
+        case "KeyW":
+                if (world.cnvMainLoc.y + 100 > world.dims.top)
+                    world.cnvMainLoc.y -= 20;
+                break;
+            case "KeyS":
+                if (world.cnvMainLoc.y + world.cnvMain.height - 100 < world.dims.bottom)
+                    world.cnvMainLoc.y += 20;
+                break;
+            case "KeyA":
+                if (world.cnvMainLoc.x + 100 > world.dims.left)
+                    world.cnvMainLoc.x += 20;
+                break;
+            case "KeyD":
+                if (world.cnvMainLoc.x + world.cnvMain.width - 100 < world.dims.right)
+                    world.cnvMainLoc.x -= 20;
+                break;
       }
   }, false);
 }
@@ -56,7 +56,7 @@ World.prototype.run = function(){
 //  save the ctx for the main Canvas
     this.ctxMain.save();
 //  move the main canvas inside of the world (translate according to this.cnvMainLoc)
-    this.ctxMain.translate(-this.canvasMainLoc.x, -this.canvasMainLoc.y);
+    this.ctxMain.translate(this.cnvMainLoc.x, this.cnvMainLoc.y);
 //  clear the mini rect
     this.ctxMini.clearRect(0, 0, this.cnvMini.width, this.cnvMini.height);
 //  save the minictx
@@ -74,14 +74,21 @@ World.prototype.run = function(){
   this.ctxMain.restore();
 //+++    Draw the main and mini Canvas with bounds and axes
   this.ctxMain.save();
-  this.ctxMain.translate(this.canvasMainLoc.x, this.canvasMainLoc.y);
+  this.ctxMain.translate(this.cnvMainLoc.x, this.cnvMainLoc.y);
 
 // save the main ctx
   this.ctxMain.save();
 // translate cnvMain according to the location of the canvas in the world
-
+  this.ctxMain.translate(this.cnvMainLoc.x,this.cnvMainLoc.y);
 // draw the bounds of the world in cnvMain
-  this.ctxMain.restore();
+  this.ctxMain.beginPath();
+  this.ctxMain.moveTo(this.dims.left,this.dims.height);
+  this.ctxMain.lineTo(this.dims.right,this.dims.height);
+  this.ctxMain.lineTo(this.dims.right,this.dims.bottom);
+  this.ctxMain.lineTo(this.dims.left,this.dims.bottom);
+  this.ctxMain.closePath();
+  this.ctxMain.lineWidth=20;
+  this.ctxMain.stroke();
 // Add axis in the main Canvas
   this.ctxMain.beginPath(); 
   this.ctxMain.moveTo(this.dims.left, 0);
@@ -98,15 +105,15 @@ World.prototype.run = function(){
 //draw x and y axes on main Map
   
 // scale cnvMini - contain the entire world (scaleX, and scaleY)
-
+this.ctxMini.scale(this.scaleX,this.scaleY);
 //center cnvMini in world
 
 //outline box inside of cnvMini
   this.ctxMini.beginPath(); //draws border mini
-  this.ctxMini.moveTo(this.canvasMainLoc.x, this.canvasMainLoc.y);
-  this.ctxMini.lineTo(this.canvasMainLoc.x, this.canvasMainLoc.y+this.cnvMain.height);
-  this.ctxMini.lineTo(this.canvasMainLoc.x + this.cnvMain.width, this.canvasMainLoc.y+this.cnvMain.height);
-  this.ctxMini.lineTo(this.canvasMainLoc.x + this.cnvMain.width, this.canvasMainLoc.y);
+  this.ctxMini.moveTo(this.cnvMainLoc.x, this.cnvMainLoc.y);
+  this.ctxMini.lineTo(this.cnvMainLoc.x, this.cnvMainLoc.y+this.cnvMain.height);
+  this.ctxMini.lineTo(this.cnvMainLoc.x + this.cnvMain.width, this.cnvMainLoc.y+this.cnvMain.height);
+  this.ctxMini.lineTo(this.cnvMainLoc.x + this.cnvMain.width, this.cnvMainLoc.y);
   this.ctxMini.closePath();
   this.ctxMini.lineWidth = 20;
   this.ctxMini.stroke();
@@ -124,7 +131,8 @@ World.prototype.run = function(){
   this.ctxMini.lineWidth = 20;
   this.ctxMini.stroke();
 // restore both ctxMain and ctxMini
-
+  this.ctxMain.restore();
+  this.ctxMini.restore();
 
 
 }
