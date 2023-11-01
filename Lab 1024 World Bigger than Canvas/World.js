@@ -102,17 +102,7 @@ this.ctxMini.scale(this.scaleX,this.scaleY);
 
 //center cnvMini in world
   this.ctxMini.translate(this.dims.width/2,this.dims.height/2);
-//outline box inside of cnvMini
-  this.ctxMini.beginPath(); //draws border mini
-  this.ctxMini.moveTo(this.cnvMainLoc.x, this.cnvMainLoc.y);
-  this.ctxMini.lineTo(this.cnvMainLoc.x+this.cnvMain.width,this.cnvMainLoc.y);
-  this.ctxMini.lineTo(this.cnvMainLoc.x+this.cnvMain.width,this.cnvMainLoc.y+this.cnvMain.height);
-  this.ctxMini.lineTo(this.cnvMainLoc.x,this.cnvMainLoc.y+this.cnvMain.height);
-  this.ctxMini.lineTo(this.cnvMainLoc.x, this.cnvMainLoc.y);
-  this.ctxMini.closePath();
-  this.ctxMini.lineWidth = 20;
-  this.ctxMini.stroke();
-//draw x and y axes on miniMap
+  //draw x and y axes on miniMap
   this.ctxMini.beginPath(); 
   this.ctxMini.moveTo(this.dims.left, 0);
   this.ctxMini.lineTo(this.dims.right, 0);
@@ -123,6 +113,18 @@ this.ctxMini.scale(this.scaleX,this.scaleY);
   this.ctxMini.moveTo(0, this.dims.top);
   this.ctxMini.lineTo(0, this.dims.bottom);
   this.ctxMini.closePath();
+  this.ctxMini.lineWidth = 20;
+  //line thins out for some reason? why?
+  this.ctxMini.stroke();
+//outline box inside of cnvMini
+  this.ctxMini.beginPath(); //draws border mini
+  this.ctxMini.moveTo(this.cnvMainLoc.x, this.cnvMainLoc.y);
+  this.ctxMini.lineTo(this.cnvMainLoc.x+this.cnvMain.width,this.cnvMainLoc.y);
+  this.ctxMini.lineTo(this.cnvMainLoc.x+this.cnvMain.width,this.cnvMainLoc.y+this.cnvMain.height);
+  this.ctxMini.lineTo(this.cnvMainLoc.x,this.cnvMainLoc.y+this.cnvMain.height);
+  this.ctxMini.lineTo(this.cnvMainLoc.x, this.cnvMainLoc.y);
+  this.ctxMini.closePath();
+  this.cnvMini.strokeStyle="red";
   this.ctxMini.lineWidth = 20;
   this.ctxMini.stroke();
 // restore both ctxMain and ctxMini
