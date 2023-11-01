@@ -44,9 +44,10 @@ Mover.prototype.render = function () {
     let ctx1 = this.ctx1;
     ctx1.beginPath();
     ctx1.arc(this.loc.x,this.loc.y,this.rad,0,Math.PI*2);
-    ctx1.closePath();
     ctx1.fillStyle = this.clr;
     ctx1.fill();
+    ctx1.closePath();
+    
    //  render balls in mini map
     let ctx2 = this.ctx2;
     ctx2.beginPath();
@@ -54,4 +55,5 @@ Mover.prototype.render = function () {
     ctx2.fillStyle = this.clr;
     ctx2.fill();
     ctx2.closePath();
+    
 }
