@@ -78,9 +78,10 @@ World.prototype.run = function(){
   this.ctxMain.beginPath();
   this.ctxMain.moveTo(this.dims.left,this.dims.height);
   this.ctxMain.lineTo(this.dims.right,this.dims.height);
+  //the lines are not appearing on the boundary but the balls still bouence
   this.ctxMain.lineTo(this.dims.right,this.dims.bottom);
   this.ctxMain.lineTo(this.dims.left,this.dims.bottom);
-  this.ctxMain.lineWidth=20;
+  this.ctxMain.lineWidth=40;
   this.ctxMain.stroke();
   this.ctxMain.closePath();
 
@@ -113,9 +114,9 @@ World.prototype.run = function(){
   this.ctxMini.lineTo(this.cnvMini.width/2, this.dims.bottom);
   this.ctxMini.closePath();
   this.ctxMini.lineWidth = 20*this.scaleX;
-  //line thins out for some reason? why?
   this.ctxMini.stroke();
 //outline box inside of cnvMini
+//box slides the opposite direction of keys
   this.ctxMini.save();
   this.ctxMini.translate(this.cnvMini.width/2,this.cnvMini.height/2);
   this.ctxMini.beginPath(); //draws border mini
