@@ -52,7 +52,7 @@ World.prototype.run = function(){
 //  save the ctx for the main Canvas
     this.ctxMain.save();
 //  move the main canvas inside of the world (translate according to this.cnvMainLoc)
-    this.ctxMain.translate(-1*this.cnvMainLoc.x, -1*this.cnvMainLoc.y);
+    this.ctxMain.translate(-this.cnvMainLoc.x, -this.cnvMainLoc.y);
 //  clear the mini rect
 
 //  save the minictx
@@ -76,29 +76,31 @@ World.prototype.run = function(){
   this.ctxMain.translate(this.cnvMainLoc.x,this.cnvMainLoc.y);
 // draw the bounds of the world in cnvMain
   this.ctxMain.beginPath();
-  this.ctxMain.moveTo(this.dims.left,this.dims.height);
-  this.ctxMain.lineTo(this.dims.right,this.dims.height);
-  //the lines are not appearing on the boundary but the balls still bouence
-  this.ctxMain.lineTo(this.dims.right,this.dims.bottom);
-  this.ctxMain.lineTo(this.dims.left,this.dims.bottom);
+  // this.ctxMain.moveTo(this.dims.left,this.dims.top);
+  // this.ctxMain.lineTo(this.dims.right,this.dims.top);
+  // //the lines are not appearing on the boundary but the balls still bouence
+  // this.ctxMain.lineTo(this.dims.right,this.dims.bottom);
+  // this.ctxMain.lineTo(this.dims.left,this.dims.bottom);
+  // this.ctxMain.lineTo(this.dims.left,this.dims.top);
+  this.ctxMain.rect(this.dims.left,this.dims.top,this.dims.width,this.dims.height);
   this.ctxMain.lineWidth=40;
+  this.ctxMain.strokeStyle="white";
   this.ctxMain.stroke();
   this.ctxMain.closePath();
-
+  this.ctxMain.strokeStyle="black";
 // Add axis in the main Canvas
   this.ctxMain.beginPath(); 
-  this.ctxMain.moveTo(this.dims.left, this.cnvMain.height/2);
-  this.ctxMain.lineTo(this.dims.right, this.cnvMain.height/2);
+  this.ctxMain.moveTo(this.dims.left, this.dims.height/2+this.dims.top);
+  this.ctxMain.lineTo(this.dims.right, this.dims.height/2+this.dims.top);
   this.ctxMain.closePath();
   this.ctxMain.lineWidth = 20;
   this.ctxMain.stroke();
   this.ctxMain.beginPath();
-  this.ctxMain.moveTo(this.cnvMain.width/2, this.dims.top);
-  this.ctxMain.lineTo(this.cnvMain.width/2, this.dims.bottom);
+  this.ctxMain.moveTo(this.dims.width/2-this.dims.right, this.dims.top);
+  this.ctxMain.lineTo(this.dims.width/2-this.dims.right, this.dims.bottom);
   this.ctxMain.closePath();
   this.ctxMain.lineWidth = 20;
   this.ctxMain.stroke();
-//draw x and y axes on main Map
 
 //center cnvMini in world
   //draw x and y axes on miniMap
