@@ -3,11 +3,12 @@
 window.addEventListener("load", init);
 
 // global variables
-
+let snake;
 
 function init() {
     canvas = document.getElementById("cnv");
     context = canvas.getContext("2d");
+    snake=new Snake(100,100,5,10);
     animate();      // kick off the animation
 }
 

@@ -76,12 +76,6 @@ World.prototype.run = function(){
   this.ctxMain.translate(this.cnvMainLoc.x,this.cnvMainLoc.y);
 // draw the bounds of the world in cnvMain
   this.ctxMain.beginPath();
-  // this.ctxMain.moveTo(this.dims.left,this.dims.top);
-  // this.ctxMain.lineTo(this.dims.right,this.dims.top);
-  // //the lines are not appearing on the boundary but the balls still bouence
-  // this.ctxMain.lineTo(this.dims.right,this.dims.bottom);
-  // this.ctxMain.lineTo(this.dims.left,this.dims.bottom);
-  // this.ctxMain.lineTo(this.dims.left,this.dims.top);
   this.ctxMain.rect(this.dims.left,this.dims.top,this.dims.width,this.dims.height);
   this.ctxMain.lineWidth=40;
   this.ctxMain.strokeStyle="white";
