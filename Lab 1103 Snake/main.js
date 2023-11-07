@@ -8,7 +8,8 @@ let snake;
 function init() {
     canvas = document.getElementById("cnv");
     context = canvas.getContext("2d");
-    snake=new Snake(100,100,5,10);
+    snake=new Snake(400,400,2,3);
+    console.log(snake);
     animate();      // kick off the animation
 }
 
@@ -16,7 +17,7 @@ function init() {
 function animate() {
     // erase the HTMLCanvasElement
     context.clearRect(0, 0, canvas.width, canvas.height);
-    
+    snake.run();
     requestAnimationFrame(animate); // next cycle
 }
 
