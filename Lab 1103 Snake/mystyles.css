@@ -10,6 +10,7 @@ body{
  width: 900px;
  margin:auto;
  margin-top: 20px;
+ border:solid black 2px;
 }
 
 .tile{
