@@ -19,16 +19,18 @@ Snake.prototype.run=function(){
 Snake.prototype.render=function(){
     let opacity=1;
     context.beginPath();
+    context.lineCap="round";
     context.moveTo(this.loc.x,this.loc.y);
     context.lineTo(this.segments[0].x,this.segments[0].y);
+    
     for(let i=1;i<this.segments.length;i++){
         context.lineTo(this.segments[i].x,this.segments[i].y);
-        context.lineWidth=40*(1-i/this.segments.length);
-        opacity=1-(i/this.segments.length)*0.5;
+        context.lineWidth=5*(1-i/this.segments.length);
+        opacity=1-(i/this.segments.length)*0.7;
+        context.strokeStyle="rgb(0,0,255,"+opacity+")";
+        context.stroke();
     }
-    context.lineCap="round";
-    context.strokeStyle="rgb(0,0,255,"+opacity+")";
-    context.stroke();
+
     context.closePath();
 }
 Snake.prototype.update=function(){
