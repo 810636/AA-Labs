@@ -8,7 +8,7 @@ let snake;
 function init() {
     canvas = document.getElementById("cnv");
     context = canvas.getContext("2d");
-    snake=new Snake(400,400,2,3);
+    snake=new Snake(400,400,10,5);
     console.log(snake);
     animate();      // kick off the animation
 }
