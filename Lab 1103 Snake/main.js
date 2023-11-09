@@ -3,12 +3,13 @@
 window.addEventListener("load", init);
 
 // global variables
-let snake,target;
+let snakes,target;
 
 function init() {
     canvas = document.getElementById("cnv");
     context = canvas.getContext("2d");
-    snake=new Snake(400,400,20,10);
+    snakes=[];
+    snakes.push(new Snake(400,400.20,10));
     target=new Target(100,100);
     animate();      // kick off the animation
 }
@@ -18,9 +19,11 @@ function animate() {
     // erase the HTMLCanvasElement
     context.clearRect(0, 0, canvas.width, canvas.height);
     target.run();
-    snake.run();
+    snakes[0].run();
     requestAnimationFrame(animate); // next cycle
 }
-
+function addSnake(calvinpfeffer){
+    //particleSystems.push(new ParticleSystem(calvinpfeffer.offsetX,calvinpfeffer.offsetY));
+}
 
 

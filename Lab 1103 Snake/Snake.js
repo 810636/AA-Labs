@@ -52,18 +52,10 @@ Snake.prototype.update=function(){
     this.loc.add(this.vel);
 }
 Snake.prototype.checkEdges=function(){
-    if(this.loc.x<0){
-        //this.vel.multiply(-1);
-        this.loc.x=canvas.width;
-    } else if(this.loc.x>canvas.width){
-        //this.vel.multiply(-1);
-        this.loc.x=0;
+    if(this.loc.x<0||this.loc.x>canvas.width){
+        this.vel.multiply(-1);
     }
-    if(this.loc.y<0){
-        //this.vel.multiply(-1);
-        this.loc.y=canvas.height;
-    }else if(this.loc.y>canvas.height){
-        //this.vel.multiply(-1);
-        this.loc.y=0;
+    if(this.loc.y<0||this.loc.y>canvas.height){
+        this.vel.multiply(-1);
     }
 }

@@ -19,7 +19,7 @@ Target.prototype.render=function(){
   context.fill();     // render the fill
 }
 Target.prototype.update=function(){
-    this.acc=JSVector.subGetNew(this.loc, snake.loc);
+    this.acc=JSVector.subGetNew(this.loc, snakes[0].loc);
     this.acc.normalize();
     this.acc.multiply(0.05);
     this.vel.limit(3);
@@ -27,7 +27,7 @@ Target.prototype.update=function(){
     this.loc.add(this.vel);
 }
 Target.prototype.flee=function(){
-    if(this.loc.distance(snake.loc)<50){
+    if(this.loc.distance(snakes[0].loc)<50){
         let x=Math.random()*canvas.width;
         let y=Math.random()*canvas.height;
         this.loc.x=x;
