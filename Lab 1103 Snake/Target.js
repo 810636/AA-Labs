@@ -4,12 +4,13 @@ function Target(x,y){
     let dy = Math.random() * (3 + 3 + 1) - 3;
     this.vel=new JSVector(dx,dy);
     this.acc=new JSVector(0,0);
+    this.chaser=snakes[0];
 }
 Target.prototype.run=function(){
+    this.update();
     this.render();
     this.flee();
     this.checkEdges();
-    this.update();
 }
 Target.prototype.render=function(){
     context.beginPath();    // clear old path
@@ -19,7 +20,12 @@ Target.prototype.render=function(){
   context.fill();     // render the fill
 }
 Target.prototype.update=function(){
-    this.acc=JSVector.subGetNew(this.loc, snakes[0].loc);
+    for(let i=0;i<snakes.length;i++){
+        if(snakes[i].loc.distanceSquared(this.loc)<this.chaser.loc.distanceSquared(this.loc)){
+            this.chaser=snakes[i];
+        }
+    }
+    this.acc=JSVector.subGetNew(this.loc, this.chaser.loc);
     this.acc.normalize();
     this.acc.multiply(0.05);
     this.vel.limit(3);
@@ -27,7 +33,7 @@ Target.prototype.update=function(){
     this.loc.add(this.vel);
 }
 Target.prototype.flee=function(){
-    if(this.loc.distance(snakes[0].loc)<50){
+    if(this.loc.distance(this.chaser.loc)<50){
         let x=Math.random()*canvas.width;
         let y=Math.random()*canvas.height;
         this.loc.x=x;
