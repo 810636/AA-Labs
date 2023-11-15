@@ -8,7 +8,10 @@ function Snake(x,y,sNum,sLength){
     for(let i=0;i<sNum;i++){
         this.segments.push(new JSVector(this.loc.x,this.loc.y+sLength*i));
     }
-    this.oCount=0;
+    let r=Math.random()*(255-0+1)+1;
+    let g=Math.random()*(255-0+1)+1;
+    let b=Math.random()*(255-0+1)+1;
+    this.clr="rgb("+r+","+g+","+b+",";
 }
 
 Snake.prototype.run=function(){
@@ -27,7 +30,7 @@ Snake.prototype.render=function(){
         context.lineTo(this.segments[i].x,this.segments[i].y);
         context.lineWidth=5*(1-i/this.segments.length);
         opacity=1-(i/this.segments.length)*0.7;
-        context.strokeStyle="rgb(0,0,255,"+opacity+")";
+        context.strokeStyle=this.clr+opacity+")";
         context.stroke();
     }
 
@@ -43,11 +46,6 @@ Snake.prototype.update=function(){
     this.acc.normalize();
     this.acc.multiply(0.2);
     this.vel.add(this.acc);
-    let omega=Math.random()*(2*Math.PI/3+1)+Math.PI/3;
-    if((this.oCount%240)===0){
-        this.vel.rotate(omega);
-    }
-    this.oCount++;
     this.vel.limit(5);
     this.loc.add(this.vel);
 }

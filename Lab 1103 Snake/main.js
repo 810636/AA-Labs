@@ -9,8 +9,8 @@ function init() {
     canvas = document.getElementById("cnv");
     context = canvas.getContext("2d");
     snakes=[];
-    snakes.push(new Snake(400,400,20,10));
-    target=new Target(100,100);
+    snakes.push(new Snake(Math.random()*canvas.width,Math.random()*canvas.height,20,10));
+    target=new Target(Math.random()*canvas.width,Math.random()*canvas.height);
     animate();      // kick off the animation
 }
 

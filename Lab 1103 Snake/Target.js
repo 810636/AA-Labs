@@ -1,7 +1,7 @@
 function Target(x,y){
     this.loc=new  JSVector(x,y);
-    let dx = Math.random() * (3 + 3 + 1) - 3;
-    let dy = Math.random() * (3 + 3 + 1) - 3;
+    let dx = Math.random() * (7) - 3;
+    let dy = Math.random() * (7) - 3;
     this.vel=new JSVector(dx,dy);
     this.acc=new JSVector(0,0);
     this.chaser=snakes[0];
