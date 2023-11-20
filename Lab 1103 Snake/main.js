@@ -23,6 +23,7 @@ function animate() {
     requestAnimationFrame(animate); // next cycle
 }
 window.addEventListener("click",addSnake);
+
 function addSnake(sdogtripleP){
     let sl=Math.floor(Math.random()*30)+1;
     let s=Math.floor(Math.random()*20)+1;
