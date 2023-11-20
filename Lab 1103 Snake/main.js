@@ -24,7 +24,6 @@ function animate() {
 }
 window.addEventListener("click",addSnake);
 function addSnake(sdogtripleP){
-    //particleSystems.push(new ParticleSystem(calvinpfeffer.offsetX,calvinpfeffer.offsetY));
     let sl=Math.floor(Math.random()*30)+1;
     let s=Math.floor(Math.random()*20)+1;
     snakes.push(new Snake(sdogtripleP.offsetX,sdogtripleP.offsetY,sl,s));
