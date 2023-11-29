@@ -4,10 +4,13 @@ function Vehicle(loc, vel) {
   this.vel = new JSVector(vel.x, vel.y);
   this.acc = new JSVector(0, 0);
   this.desiredSep = 10;//  desired separation between vehicles
+  this.desiredAli=50;
+  this.desiredCoh=50;
   this.scl = 3;
   this.clr = "rgba(180,0,220,.8)";
   this.maxSpeed = document.getElementById("slider2").value;  // Get slider VAlue%%%%%%%%%%%%%%%%
   this.maxForce = document.getElementById("slider1").value;  // Get slider VAlue%%%%%%%%%%%%%%%%%
+  this.flockForce=new JSVector(0,0);
 }
 
 //  placing methods in the prototype 
@@ -20,7 +23,7 @@ Vehicle.prototype.run = function (vehicles) {
 
 Vehicle.prototype.flock = function(vehicles) {
   //  flock force is the accumulation of all forces
-  let flockForce = new JSVector(0,0);
+  this.flockForce = new JSVector(0,0);
   // set up force vectors to be added to acc
   let sep = this.separate(vehicles);
   let ali = this.align(vehicles);
@@ -34,10 +37,10 @@ Vehicle.prototype.flock = function(vehicles) {
   ali.multiply(aliMult);
   coh.multiply(cohMult);
   //  add each of these to flockForce
-  flockForce.add(sep);
-  flockForce.add(ali);
-  flockForce.add(coh);
-  this.acc.add(flockForce);
+  this.flockForce.add(sep);
+  this.flockForce.add(ali);
+  this.flockForce.add(coh);
+  this.acc.add(this.flockForce);
 }
 //+++++++++++++++++++++++++++++++++  Flocking functions
 Vehicle.prototype.separate = function (vehicles) {
@@ -47,6 +50,7 @@ Vehicle.prototype.separate = function (vehicles) {
     let d=vehicles[i].loc.distance(this.loc);
     if(vehicles[i]!==this&&d<this.desiredSep){
       let diff=JSVector.subGetNew(this.loc,vehicles[i].loc)
+      diff.divide(d);
       diff.normalize();
       sep.add(diff);
       count++;
@@ -64,7 +68,7 @@ Vehicle.prototype.align = function (vehicles) {
   let sum=new JSVector(0,0);
   let count=0;
   for(let i=0;i<vehicles.length;i++){
-    if(this.loc.distance(vehicles[i].loc)<50&&vehicles[i]!==this){
+    if(this.loc.distance(vehicles[i].loc)<this.desiredAli&&vehicles[i]!==this){
       sum.add(vehicles[i].vel);
       count++;
     }
@@ -85,7 +89,7 @@ Vehicle.prototype.cohesion = function (vehicles) {
   let count=0;
   let d=this.loc.distance(vehicles[i].loc);
   for(let i=0;i<vehicles.length;i++){
-    if(d<50&&d>0){
+    if(d<this.desiredCoh&&d>0){
       sum.add(vehicles[i].loc);
       count++;
     }
